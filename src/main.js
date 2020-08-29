@@ -43,5 +43,9 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
+app.post("/sample", async (req, res) => {
+  res.json(req.body);
+});
+
 // started teh server.
 app.listen(3000);
