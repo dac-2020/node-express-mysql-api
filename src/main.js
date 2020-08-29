@@ -2,10 +2,17 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+
+// Middelware :: Programs :: Which runs in advance.
 app.use(cors()); // unblocking cors policy
 app.use(express.json()); // this will help to read the data coming in body :: TEXT to JSON
 
 const dbadduser = require("./db.add.user");
+
+// http://localhost:3000/welcome
+app.get("/a", (req, res) => {
+  res.json({ title: "Welcome!!" });
+});
 
 // created an API
 // learnt how to read the input; coming from client.
@@ -27,7 +34,7 @@ app.get("/adduser", async (req, res) => {
 // http://localhost:3000/adduser
 app.post("/adduser", async (req, res) => {
   try {
-    const input = req.body; // before doing this // app.use(express.json());
+    const input = req.body; // before doing this
 
     await dbadduser.addUser(input);
     res.json({ message: "success post" });
