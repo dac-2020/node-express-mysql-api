@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const multer = require("multer");
 
 const app = express();
 
 // Middelware :: Programs :: Which runs in advance.
 app.use(cors()); // unblocking cors policy
-app.use(express.json()); // this will help to read the data coming in body :: TEXT to JSON
+app.use(express.json()); // BODY :: RAW :: JSON
+app.use(express.urlencoded({ extended: true })); // BODY :: URL ENCODED
+const upload = multer(); // BODY :: FORM DATA
 
 const dbadduser = require("./db.add.user");
 
@@ -43,7 +46,7 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
-app.post("/sample", async (req, res) => {
+app.post("/sample", upload.none(), async (req, res) => {
   res.json(req.body);
 });
 
