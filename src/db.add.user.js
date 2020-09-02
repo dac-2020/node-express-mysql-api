@@ -27,4 +27,21 @@ let addUser = async (input) => {
   await connection.endAsync();
 };
 
-module.exports = { addUser };
+let authenticateUser = async (input) => {
+  const connection = mysql.createConnection(DB_CONFIG);
+  await connection.connectAsync();
+
+  let sql = "SELECT * FROM USER WHERE USERNAME=? AND PASSWORD=?";
+  const results = await connection.queryAsync(sql, [
+    input.username,
+    input.password,
+  ]);
+
+  await connection.endAsync();
+
+  if (results.length === 0) {
+    throw new Error("Invalid Credentials");
+  }
+};
+
+module.exports = { addUser, authenticateUser };

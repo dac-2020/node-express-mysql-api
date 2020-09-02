@@ -46,6 +46,17 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
+app.post("/auth-user", async (req, res) => {
+  try {
+    const input = req.body;
+
+    await dbadduser.authenticateUser(input);
+    res.json({ opr: true });
+  } catch (err) {
+    res.json({ opr: false });
+  }
+});
+
 app.post("/sample", upload.none(), async (req, res) => {
   res.json(req.body);
 });
